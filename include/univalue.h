@@ -14,6 +14,8 @@
 #include <map>
 #include <cassert>
 
+#include <stdexcept>
+
 #include <sstream>        // .get_int64()
 #include <utility>        // std::pair
 
@@ -180,7 +182,7 @@ public:
     bool push_back(std::pair<std::string,UniValue> pear) {
         return pushKV(pear.first, pear.second);
     }
-    friend const UniValue& find_value( const UniValue& obj, const std::string& name);
+    friend const UniValue& find_value(const UniValue& obj, const std::string& name, const bool throw_if_not_present);
 };
 
 //
@@ -302,6 +304,11 @@ static inline bool json_isspace(int ch)
 
 extern const UniValue NullUniValue;
 
-const UniValue& find_value( const UniValue& obj, const std::string& name);
+const UniValue& find_value(const UniValue& obj, const std::string& name, const bool throw_if_not_present = false);
+
+class KeyNotPresentError: public std::runtime_error {
+    public:
+        KeyNotPresentError(): std::runtime_error("KeyNotPresentError") {}
+};
 
 #endif // __UNIVALUE_H__
