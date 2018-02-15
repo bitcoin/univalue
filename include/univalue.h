@@ -308,7 +308,7 @@ const UniValue& find_value(const UniValue& obj, const std::string& name, const b
 
 class KeyNotPresentError: public std::runtime_error {
     public:
-        KeyNotPresentError(): std::runtime_error("KeyNotPresentError") {}
+        explicit KeyNotPresentError(): std::runtime_error("KeyNotPresentError") {}
 };
 
 #endif // __UNIVALUE_H__
