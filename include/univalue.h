@@ -22,6 +22,7 @@
 class UniValue {
 public:
     enum VType { VNULL, VOBJ, VARR, VSTR, VNUM, VBOOL, };
+    enum keystatus { KEY_NOT_PRESENT, KEY_PRESENT };
 
     UniValue() { typ = VNULL; }
     UniValue(UniValue::VType initialType, const std::string& initialStr = "") {
@@ -182,7 +183,7 @@ public:
     bool push_back(std::pair<std::string,UniValue> pear) {
         return pushKV(pear.first, pear.second);
     }
-    friend const UniValue& find_value(const UniValue& obj, const std::string& name, const bool throw_if_not_present);
+    friend const UniValue& find_value(const UniValue& obj, const std::string& name, enum UniValue::keystatus *status);
 };
 
 //
@@ -304,11 +305,6 @@ static inline bool json_isspace(int ch)
 
 extern const UniValue NullUniValue;
 
-const UniValue& find_value(const UniValue& obj, const std::string& name, const bool throw_if_not_present = false);
-
-class KeyNotPresentError: public std::runtime_error {
-    public:
-        explicit KeyNotPresentError(): std::runtime_error("KeyNotPresentError") {}
-};
+const UniValue& find_value(const UniValue& obj, const std::string& name, enum UniValue::keystatus *status=NULL);
 
 #endif // __UNIVALUE_H__
