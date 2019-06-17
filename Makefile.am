@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I build-aux/m4
-.PHONY: gen
+.PHONY: gen FORCE
 .INTERMEDIATE: $(GENBIN)
 
 include_HEADERS = include/univalue.h
@@ -30,8 +30,8 @@ $(GENBIN): $(GEN_SRCS)
 	@echo Building $@
 	$(AM_V_at)c++ -I$(top_srcdir)/include -o $@ $<
 
-gen: lib/univalue_escapes.h $(GENBIN)
-	@echo Updating $<
+gen: $(GENBIN) FORCE
+	@echo Updating lib/univalue_escapes.h
 	$(AM_V_at)$(GENBIN) > lib/univalue_escapes.h
 
 noinst_PROGRAMS = $(TESTS) test/test_json
