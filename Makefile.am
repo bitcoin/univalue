@@ -113,4 +113,4 @@ TEST_FILES = \
 	$(TEST_DATA_DIR)/round6.json \
 	$(TEST_DATA_DIR)/round7.json
 
-EXTRA_DIST=$(TEST_FILES) $(GEN_SRCS)
+EXTRA_DIST = autogen.sh $(TEST_FILES) $(GEN_SRCS)
