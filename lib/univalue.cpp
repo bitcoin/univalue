@@ -166,7 +166,7 @@ void UniValue::getObjMap(std::map<std::string,UniValue>& kv) const
 
 bool UniValue::findKey(const std::string& key, size_t& retIdx) const
 {
-    for (size_t i = 0; i < keys.size(); i++) {
+    for (ssize_t i = keys.size() - 1; i >= 0; i--) {
         if (keys[i] == key) {
             retIdx = i;
             return true;
